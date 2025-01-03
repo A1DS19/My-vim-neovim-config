@@ -28,6 +28,7 @@ Plug 'preservim/nerdtree'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-commentary'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 
@@ -51,6 +52,11 @@ let g:airline_theme='onedark'
 nnoremap <C-t> :NERDTreeToggle<CR>
 " Start NERDTree and put the cursor back in the other window.
 autocmd VimEnter * NERDTree | wincmd p
+
+:CocInstall coc-json coc-tsserver
+:ConInstall coc-prettier
+:CocInstall coc-rust-analyzer
+
 EOF
 
 # ------------------------------------------------
