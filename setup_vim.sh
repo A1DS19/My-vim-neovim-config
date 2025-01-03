@@ -20,7 +20,14 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 echo "Creating ~/.vimrc..."
 cat << 'EOF' > "${HOME}/.vimrc"
 call plug#begin()
+
 Plug 'nanotech/jellybeans.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'preservim/nerdtree'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'jiangmiao/auto-pairs'
+
 call plug#end()
 
 set number          " Show line numbers
@@ -36,6 +43,13 @@ set encoding=utf-8  " Use UTF-8 encoding
 syntax enable       " Enable syntax highlighting
 
 colorscheme jellybeans
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='onedark'
+
+nnoremap <C-t> :NERDTreeToggle<CR>
+" Start NERDTree and put the cursor back in the other window.
+autocmd VimEnter * NERDTree | wincmd p
 EOF
 
 # ------------------------------------------------
