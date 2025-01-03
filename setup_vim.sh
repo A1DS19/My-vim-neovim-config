@@ -1,26 +1,51 @@
-# 1. Create or override ~/.vimrc
+#!/usr/bin/env bash
+
+# ------------------------------------------------
+# 1. Install vim-plug for Vim
+# ------------------------------------------------
+echo "Installing vim-plug for Vim..."
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# ------------------------------------------------
+# 2. Install vim-plug for Neovim
+# ------------------------------------------------
+echo "Installing vim-plug for Neovim..."
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+# ------------------------------------------------
+# 3. Create/override ~/.vimrc
+# ------------------------------------------------
+echo "Creating ~/.vimrc..."
 cat << 'EOF' > "${HOME}/.vimrc"
-set number          
-set rnu            
-set cursorline      
-set mouse=a        
-set clipboard=unnamed   
-set laststatus=2    
-set showcmd        
-set noshowmode      
-set showmatch      
-set encoding=utf-8  
-syntax enable       
+call plug#begin()
+call plug#end()
+
+set number          " Show line numbers
+set rnu             " Show relative line numbers
+set cursorline      " Highlight current line
+set mouse=a         " Enable mouse
+set clipboard=unnamed   " Use the system clipboard
+set laststatus=2    " Always display status line
+set showcmd         " Display incomplete commands
+set noshowmode      " Don't show mode (like --INSERT--)
+set showmatch       " Highlight matching bracket briefly
+set encoding=utf-8  " Use UTF-8 encoding
+syntax enable       " Enable syntax highlighting
 EOF
 
-# 2. Create the directory ~/.config/nvim (if it doesn't exist)
+# ------------------------------------------------
+# 4. Create ~/.config/nvim/init.vim
+#    (Neovim's main configuration file)
+# ------------------------------------------------
+echo "Setting up Neovim configuration..."
 mkdir -p "${HOME}/.config/nvim"
-
-# 3. Create a file nvim.init inside the newly created directory
 cat << 'EOF' > "${HOME}/.config/nvim/init.vim"
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath=&runtimepath
 source ~/.vimrc
 EOF
 
-echo "Vim and Neovim configuration files have been successfully created/updated."
+echo "Setup complete! vim-plug installed and configurations created."
+
