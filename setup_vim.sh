@@ -20,6 +20,7 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 echo "Creating ~/.vimrc..."
 cat << 'EOF' > "${HOME}/.vimrc"
 call plug#begin()
+Plug 'nanotech/jellybeans.vim'
 call plug#end()
 
 set number          " Show line numbers
@@ -33,6 +34,8 @@ set noshowmode      " Don't show mode (like --INSERT--)
 set showmatch       " Highlight matching bracket briefly
 set encoding=utf-8  " Use UTF-8 encoding
 syntax enable       " Enable syntax highlighting
+
+colorscheme jellybeans
 EOF
 
 # ------------------------------------------------
