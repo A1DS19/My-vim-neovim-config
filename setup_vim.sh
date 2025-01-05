@@ -53,9 +53,14 @@ nnoremap <C-t> :NERDTreeToggle<CR>
 " Start NERDTree and put the cursor back in the other window.
 autocmd VimEnter * NERDTree | wincmd p
 
-:CocInstall coc-json coc-tsserver
-:ConInstall coc-prettier
-:CocInstall coc-rust-analyzer
+:CocInstall coc-json coc-tsserver coc-prettier coc-rust-analyzer
+
+
+let g:rustfmt_autosave = 1
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 EOF
 
