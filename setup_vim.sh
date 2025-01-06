@@ -54,7 +54,7 @@ nnoremap <C-t> :NERDTreeToggle<CR>
 autocmd VimEnter * NERDTree | wincmd p
 autocmd BufWinEnter * if &buftype != 'quickfix' && getcmdwintype() == '' | silent NERDTreeMirror | endif
 
-:CocInstall coc-json coc-tsserver coc-prettier coc-rust-analyzer
+:CocInstall coc-json coc-tsserver coc-prettier coc-rust-analyzer coc-omnisharp
 
 
 let g:rustfmt_autosave = 1
