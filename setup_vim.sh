@@ -34,7 +34,7 @@ call plug#end()
 
 set number          " Show line numbers
 set rnu             " Show relative line numbers
-set cursorline      " Highlight current line
+set cursorline      " Highlight current linegt
 set mouse=a         " Enable mouse
 set clipboard=unnamed   " Use the system clipboard
 set laststatus=2    " Always display status line
@@ -52,6 +52,7 @@ let g:airline_theme='onedark'
 nnoremap <C-t> :NERDTreeToggle<CR>
 " Start NERDTree and put the cursor back in the other window.
 autocmd VimEnter * NERDTree | wincmd p
+autocmd BufWinEnter * if &buftype != 'quickfix' && getcmdwintype() == '' | silent NERDTreeMirror | endif
 
 :CocInstall coc-json coc-tsserver coc-prettier coc-rust-analyzer
 
