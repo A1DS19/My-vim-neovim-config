@@ -19,54 +19,133 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 # ------------------------------------------------
 echo "Creating ~/.vimrc..."
 cat << 'EOF' > "${HOME}/.vimrc"
-call plug#begin()
+" Initialize vim-plug
+call plug#begin('~/.vim/plugged')
 
+" **Color Scheme**
 Plug 'nanotech/jellybeans.vim'
+
+" **Status Line**
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
+" **File Explorer**
 Plug 'preservim/nerdtree'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'jiangmiao/auto-pairs'
-Plug 'tpope/vim-commentary'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'preservim/nerdtree' |
-            \ Plug 'Xuyuanp/nerdtree-git-plugin' |
-            \ Plug 'ryanoasis/vim-devicons'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'scrooloose/nerdtree-project-plugin'
 
+" **Navigation Enhancements**
+Plug 'christoomey/vim-tmux-navigator'
+
+" **Auto Pairing**
+Plug 'jiangmiao/auto-pairs'
+
+" **Code Commenting**
+Plug 'tpope/vim-commentary'
+
+" **Language Server Protocol (LSP) and Autocompletion**
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" **Optional: Gutentags for Automatic Tag Generation**
+" Plug 'ludovicchabant/vim-gutentags'
+
 call plug#end()
 
-set number          " Show line numbers
-set rnu             " Show relative line numbers
-set cursorline      " Highlight current linegt
-set mouse=a         " Enable mouse
-set clipboard=unnamed   " Use the system clipboard
-set laststatus=2    " Always display status line
-set showcmd         " Display incomplete commands
-set noshowmode      " Don't show mode (like --INSERT--)
-set showmatch       " Highlight matching bracket briefly
-set encoding=utf-8  " Use UTF-8 encoding
-syntax enable       " Enable syntax highlighting
+" -------------------------------
+" **Basic Settings**
+" -------------------------------
 
+set number                 " Show absolute line numbers
+set relativenumber         " Show relative line numbers
+set cursorline             " Highlight current line
+set mouse=a                " Enable mouse support
+set clipboard=unnamed      " Use the system clipboard
+set laststatus=2           " Always display the status line
+set showcmd                " Display incomplete commands
+set noshowmode             " Don't show mode (like --INSERT--)
+set showmatch              " Highlight matching brackets
+set encoding=utf-8         " Use UTF-8 encoding
+syntax enable              " Enable syntax highlighting
+
+" -------------------------------
+" **Color Scheme**
+" -------------------------------
 colorscheme jellybeans
 
+" -------------------------------
+" **Vim-Airline Configuration**
+" -------------------------------
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='onedark'
+let g:airline_theme = 'onedark'
 
+" -------------------------------
+" **NERDTree Configuration**
+" -------------------------------
+
+" Toggle NERDTree with Ctrl + t
 nnoremap <C-t> :NERDTreeToggle<CR>
-" Start NERDTree and put the cursor back in the other window.
+
+" Automatically open NERDTree on Vim start and focus on the last window
 autocmd VimEnter * NERDTree | wincmd p
+
+" Mirror NERDTree when opening new buffers
 autocmd BufWinEnter * if &buftype != 'quickfix' && getcmdwintype() == '' | silent NERDTreeMirror | endif
 
-:CocInstall coc-json coc-tsserver coc-prettier coc-rust-analyzer coc-omnisharp coc-python
+" -------------------------------
+" **CoC.nvim Configuration**
+" -------------------------------
 
+" Use <Tab> and <S-Tab> for navigating completion menu
+inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-h>"
 
+" Accept completion with Enter key
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Key mappings for CoC
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Show documentation with K
+nnoremap <silent> K :call CocAction('doHover')<CR>
+
+" Highlight symbol and references on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Format current buffer
+nmap <silent> <leader>f :call CocAction('format')<CR>
+
+" Trigger code actions
+nmap <silent> <leader>ca :CocCommand editor.action.codeAction<CR>
+
+" Rust specific settings
 let g:rustfmt_autosave = 1
-" Make <CR> to accept selected completion item or notify coc.nvim to format
-" <C-g>u breaks current undo, please make your own choice.
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" -------------------------------
+" **Optional: Gutentags Configuration**
+" -------------------------------
+" If you chose to install vim-gutentags, uncomment and configure as needed
+" let g:gutentags_enabled = 1
+" let g:gutentags_project_root = ['.git', 'package.json', 'pyproject.toml', 'Cargo.toml', 'go.mod']
+
+" -------------------------------
+" **Additional Plugins and Settings**
+" -------------------------------
+
+" Add any additional plugins below
+" Plug 'plugin/name'
+
+" -------------------------------
+" **End of Configuration**
+" -------------------------------
 
 EOF
 
