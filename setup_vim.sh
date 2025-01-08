@@ -144,6 +144,16 @@ let g:rustfmt_autosave = 1
 " Plug 'plugin/name'
 
 " -------------------------------
+" **Buffer Navigation Mappings**
+" -------------------------------
+
+" Map 'bn' to go to the next buffer
+nnoremap bn :bnext<CR>
+
+" Map 'bp' to go to the previous buffer
+nnoremap bp :bprevious<CR>
+
+" -------------------------------
 " **End of Configuration**
 " -------------------------------
 
