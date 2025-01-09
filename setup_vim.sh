@@ -93,6 +93,8 @@ autocmd VimEnter * NERDTree | wincmd p
 " Mirror NERDTree when opening new buffers
 autocmd BufWinEnter * if &buftype != 'quickfix' && getcmdwintype() == '' | silent NERDTreeMirror | endif
 
+let NERDTreeShowHidden=1
+
 " -------------------------------
 " **CoC.nvim Configuration**
 " -------------------------------
