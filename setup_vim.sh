@@ -156,6 +156,18 @@ nnoremap bn :bnext<CR>
 nnoremap bp :bprevious<CR>
 
 " -------------------------------
+" **Languages configuration**
+" -------------------------------
+let g:coc_global_extensions = [
+  \ 'coc-json',
+  \ 'coc-tsserver',
+  \ 'coc-prettier',
+  \ 'coc-rust-analyzer',
+  \ 'coc-python',
+  \ 'coc-omnisharp'
+  \ ]
+
+" -------------------------------
 " **End of Configuration**
 " -------------------------------
 
